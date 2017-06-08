@@ -113,4 +113,37 @@
   }
 }
 
+#pragma mark Notification
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+  for (id<FRDModule> module in self.modules) {
+    if ([module respondsToSelector:_cmd]) {
+      [module application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+    }
+  }
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+  for (id<FRDModule> module in self.modules) {
+    if ([module respondsToSelector:_cmd]) {
+      [module application:application didFailToRegisterForRemoteNotificationsWithError:error];
+    }
+  }
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+  for (id<FRDModule> module in self.modules) {
+    if ([module respondsToSelector:_cmd]) {
+      [module application:application didReceiveRemoteNotification:userInfo];
+    }
+  }
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+  for (id<FRDModule> module in self.modules) {
+    if ([module respondsToSelector:_cmd]) {
+      [module application:application didReceiveLocalNotification:notification];
+    }
+  }
+}
+
 @end
